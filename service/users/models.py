@@ -20,6 +20,8 @@ class UserManager(BaseUserManager):
 # Create your models here.
 class User(AbstractUser):
     TIMEOUT = 60 * 5
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     email = models.EmailField(max_length=256, unique=True)
     username = models.CharField(max_length=128, unique=True)
