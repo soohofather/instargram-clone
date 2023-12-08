@@ -9,5 +9,5 @@ signup = AuthViewSet.as_view({
 })
 
 urlpatterns = [
-    path('signup', signup)
+    path('/signup', signup)
 ]

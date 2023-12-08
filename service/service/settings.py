@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'users',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,7 +83,7 @@ DATABASES = {
         'NAME': 'service',
         'USER': 'admin',
         'PASSWORD': '1234',
-        'HOST': 'instaclone-db',
+        'HOST': 'instaclone-db', #데이터 베이스 컨테이너 이름
         'PORT': 5432,
     }
 }
@@ -132,12 +134,21 @@ AUTH_USER_MODEL = 'users.USER'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated', #로그인 된 사용자만 사용하게끔 지정
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination', #무한 스크롤링을 위한 페이지네이션
     'PAGE_SIZE': 5,
 }
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:9998',
+    'http://localhost:9997'
+]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:9998'
+]

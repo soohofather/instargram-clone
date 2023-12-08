@@ -14,12 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'updated',
         )
+
+        # 
         extra_kwargs = {
             'password': {
                 'write_only': True
             }
         }
     
+    # User 모델 정의하면서 생성하는것을 재정의했기때문에
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
     
