@@ -37,3 +37,12 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ['created']
+
+    def _create_authcode(self):
+        pass
+
+    def create_authcode(self):
+        pass
+
+    def check_authcode(self):
+        pass

@@ -1,3 +1,5 @@
+// React modules
+import { useState } from 'react';
 import { useForm, RegisterOptions } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +21,7 @@ const SignupForm = () => {
     minLength: 8
   }
 
+  const [errorMsg, setErrorMsg] = useState("");
   const { register, handleSubmit, formState: { isValid } } = useForm({ mode: 'onChange'});
   const nav = useNavigate();
   const submit = (data: any) => {
@@ -33,6 +36,12 @@ const SignupForm = () => {
       // 그 외 진행
       .catch((error)=>{
         console.log(error);
+        let errorArray: string[] = [];
+        Object.keys(error.response.data).map((key)=>{
+          errorArray = [...errorArray.concat(error.response.data[key])];
+          return null;
+        })
+        setErrorMsg(errorArray.join(" "));
       })
   }
 
@@ -43,6 +52,7 @@ const SignupForm = () => {
       <input className="form-input" type="text" {...register("username", usernameOpts)} placeholder="사용자이름"/>
       <input className="form-input" type="password" {...register("password", passwordOpts)} placeholder="비밀번호"/>
       <button className="form-btn form-btn-blue" type="submit" disabled={!isValid}>가입</button>
+      {errorMsg !== "" && <div className="form-error">{errorMsg}</div>}
     </form>
   )
 
